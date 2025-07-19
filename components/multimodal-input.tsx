@@ -23,7 +23,7 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { useScrollToBottom } from '@/hooks/use-scroll-to-bottom';
-import type { VisibilityType } from './visibility-selector';
+
 import type { ChatMessage } from '@/lib/types';
 
 function PureMultimodalInput({
@@ -36,7 +36,6 @@ function PureMultimodalInput({
   setMessages,
   sendMessage,
   className,
-  selectedVisibilityType,
 }: {
   chatId: string;
   input: string;
@@ -47,7 +46,6 @@ function PureMultimodalInput({
   setMessages: UseChatHelpers<ChatMessage>['setMessages'];
   sendMessage: UseChatHelpers<ChatMessage>['sendMessage'];
   className?: string;
-  selectedVisibilityType: VisibilityType;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
@@ -166,7 +164,6 @@ function PureMultimodalInput({
         <SuggestedActions
           sendMessage={sendMessage}
           chatId={chatId}
-          selectedVisibilityType={selectedVisibilityType}
         />
       )}
 
@@ -215,8 +212,6 @@ export const MultimodalInput = memo(
   (prevProps, nextProps) => {
     if (prevProps.input !== nextProps.input) return false;
     if (prevProps.status !== nextProps.status) return false;
-    if (prevProps.selectedVisibilityType !== nextProps.selectedVisibilityType)
-      return false;
 
     return true;
   },

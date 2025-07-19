@@ -23,14 +23,12 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     redirect('/api/auth/guest');
   }
 
-  if (chat.visibility === 'private') {
-    if (!session.user) {
-      return notFound();
-    }
+  if (!session.user) {
+    return notFound();
+  }
 
-    if (session.user.id !== chat.userId) {
-      return notFound();
-    }
+  if (session.user.id !== chat.userId) {
+    return notFound();
   }
 
   const messagesFromDb = await getMessagesByChatId({
@@ -48,7 +46,6 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         id={chat.id}
         initialMessages={uiMessages}
         initialChatModel={DEFAULT_CHAT_MODEL}
-        initialVisibilityType={chat.visibility}
         isReadonly={session?.user?.id !== chat.userId}
         session={session}
         autoResume={true}
@@ -61,7 +58,6 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
       id={chat.id}
       initialMessages={uiMessages}
       initialChatModel={chatModelFromCookie.value}
-      initialVisibilityType={chat.visibility}
       isReadonly={session?.user?.id !== chat.userId}
       session={session}
       autoResume={true}

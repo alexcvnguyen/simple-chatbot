@@ -2,14 +2,14 @@
 
 ## Files that need to be removed
 
-- [ ] `hooks/use-chat-visibility.ts` - **ENTIRE FILE REMOVAL** (chat visibility hook)
-- [ ] `components/visibility-selector.tsx` - **ENTIRE FILE REMOVAL** (visibility selector component)
+- [x] `hooks/use-chat-visibility.ts` - **ENTIRE FILE REMOVAL** (chat visibility hook)
+- [x] `components/visibility-selector.tsx` - **ENTIRE FILE REMOVAL** (visibility selector component)
 
 ## Files that require modification
 
 ### Core Chat & UI Components
 
-- [ ] `components/chat.tsx` - Remove visibility state management:
+- [x] `components/chat.tsx` - Remove visibility state management:
 
   - Remove `import type { VisibilityType } from './visibility-selector';`
   - Remove `import { useChatVisibility } from '@/hooks/use-chat-visibility';`
@@ -20,7 +20,7 @@
   - Remove `selectedVisibilityType={initialVisibilityType}` from ChatHeader props
   - Remove `selectedVisibilityType={visibilityType}` from MultimodalInput props
 
-- [ ] `components/chat-header.tsx` - Remove visibility selector:
+- [x] `components/chat-header.tsx` - Remove visibility selector:
 
   - Remove `import { type VisibilityType, VisibilitySelector } from './visibility-selector';`
   - Remove `selectedVisibilityType` from component props interface
@@ -28,7 +28,7 @@
   - Remove entire `<VisibilitySelector>` component and its props
   - Remove visibility-related conditional rendering
 
-- [ ] `components/sidebar-history-item.tsx` - Remove visibility controls:
+- [x] `components/sidebar-history-item.tsx` - Remove visibility controls:
 
   - Remove `import { useChatVisibility } from '@/hooks/use-chat-visibility';`
   - Remove `import { CheckCircleFillIcon, GlobeIcon, LockIcon, MoreHorizontalIcon, ShareIcon, TrashIcon } from './icons';`
@@ -39,7 +39,7 @@
   - Remove visibility state management and UI updates
   - Remove `DropdownMenuPortal` usage if not used elsewhere
 
-- [ ] `components/multimodal-input.tsx` - Remove visibility prop:
+- [x] `components/multimodal-input.tsx` - Remove visibility prop:
 
   - Remove `import type { VisibilityType } from './visibility-selector';`
   - Remove `selectedVisibilityType` from component props interface
@@ -47,7 +47,7 @@
   - Remove `selectedVisibilityType={selectedVisibilityType}` from sendMessage call
   - Remove visibility-related prop comparison in memo
 
-- [ ] `components/suggested-actions.tsx` - Remove visibility prop:
+- [x] `components/suggested-actions.tsx` - Remove visibility prop:
 
   - Remove `import type { VisibilityType } from './visibility-selector';`
   - Remove `selectedVisibilityType` from component props interface
@@ -56,12 +56,12 @@
 
 ### Database & API Components
 
-- [ ] `lib/db/schema.ts` - Remove visibility field:
+- [x] `lib/db/schema.ts` - Remove visibility field:
 
   - Remove `visibility: varchar('visibility', { enum: ['public', 'private'] }).notNull().default('private'),` from chat table
   - **CRITICAL**: _This will NOT require a new database migration, all projects will start on a clean slate_
 
-- [ ] `lib/db/queries.ts` - Remove visibility-related functions:
+- [x] `lib/db/queries.ts` - Remove visibility-related functions:
 
   - Remove `import type { VisibilityType } from '@/components/visibility-selector';`
   - Remove `visibility` parameter from `saveChat` function
@@ -70,12 +70,12 @@
   - Remove `updateChatVisiblityById` function entirely
   - Remove visibility-related error handling
 
-- [ ] `app/(chat)/actions.ts` - Remove visibility action:
+- [x] `app/(chat)/actions.ts` - Remove visibility action:
 
   - Remove `import type { VisibilityType } from '@/components/visibility-selector';`
   - Remove `updateChatVisibility` function entirely
 
-- [ ] `app/(chat)/api/chat/route.ts` - Remove visibility handling:
+- [x] `app/(chat)/api/chat/route.ts` - Remove visibility handling:
 
   - Remove `import type { VisibilityType } from '@/components/visibility-selector';`
   - Remove `selectedVisibilityType` from request body destructuring
@@ -83,23 +83,23 @@
   - Remove `visibility: selectedVisibilityType,` from saveChat call
   - Remove visibility-related logging
 
-- [ ] `app/(chat)/api/chat/schema.ts` - Remove visibility schema:
+- [x] `app/(chat)/api/chat/schema.ts` - Remove visibility schema:
 
   - Remove `selectedVisibilityType: z.enum(['public', 'private']),` from postRequestBodySchema
 
-- [ ] `app/(chat)/api/chat/[id]/stream/route.ts` - Remove visibility checks:
+- [x] `app/(chat)/api/chat/[id]/stream/route.ts` - Remove visibility checks:
 
   - Remove visibility check logic: `if (chat.visibility === 'private' && chat.userId !== session.user.id)`
   - Remove visibility-related authorization logic
 
 ### Page Components
 
-- [ ] `app/(chat)/page.tsx` - Remove visibility prop:
+- [x] `app/(chat)/page.tsx` - Remove visibility prop:
 
   - Remove `initialVisibilityType="private"` from Chat component props
   - Remove visibility-related prop passing
 
-- [ ] `app/(chat)/chat/[id]/page.tsx` - Remove visibility logic:
+- [x] `app/(chat)/chat/[id]/page.tsx` - Remove visibility logic:
 
   - Remove visibility check logic: `if (chat.visibility === 'private')`
   - Remove visibility-related authorization checks
@@ -108,7 +108,7 @@
 
 ### Icons & UI Elements
 
-- [ ] `components/icons.tsx` - Remove visibility-related icons:
+- [x] `components/icons.tsx` - Remove visibility-related icons:
 
   - Remove `export const GlobeIcon` function (if not used elsewhere)
   - Remove `export const LockIcon` function (if not used elsewhere)
@@ -118,13 +118,13 @@
 
 ### Test Infrastructure
 
-- [ ] `tests/pages/chat.ts` - Remove visibility test utilities:
+- [x] `tests/pages/chat.ts` - Remove visibility test utilities:
 
   - Remove `getSelectedVisibility()` method
   - Remove `chooseVisibilityFromSelector()` method
   - Remove visibility-related test helpers
 
-- [ ] `tests/routes/chat.test.ts` - Remove visibility from API tests:
+- [x] `tests/routes/chat.test.ts` - Remove visibility from API tests:
 
   - Remove `selectedVisibilityType: 'private'` from all test request bodies
   - Remove `selectedVisibilityType: 'public'` from test request bodies
@@ -134,12 +134,12 @@
 
 ### Database Migration
 
-- [ ] `lib/db/migrations/0000_initial_schema.sql` - Remove visibility column:
+- [x] `lib/db/migrations/0000_initial_schema.sql` - Remove visibility column:
 
   - Remove `"visibility" varchar CHECK ("visibility" IN ('public', 'private')) DEFAULT 'private' NOT NULL` from Chat table
   - **CRITICAL**: _This will NOT require a new database migration, all projects will start on a clean slate_
 
-- [ ] `lib/db/migrations/meta/0000_snapshot.json` - Remove visibility from schema snapshot:
+- [x] `lib/db/migrations/meta/0000_snapshot.json` - Remove visibility from schema snapshot:
 
   - Remove the entire `"visibility"` object from the Chat table schema (lines ~35-42)
   - This ensures the migration snapshot is consistent with the schema changes
@@ -171,28 +171,28 @@ grep -r "chat\.visibility" --include="*.ts" --include="*.tsx" .
 
 ### 2. **Type Safety Verification**
 
-- [ ] Run `npm run lint` to ensure no TypeScript errors
-- [ ] Run `npm run build` to verify build success
-- [ ] Check that all visibility type references are removed
+- [x] Run `npm run lint` to ensure no TypeScript errors
+- [x] Run `npm run build` to verify build success
+- [x] Check that all visibility type references are removed
 
 ### 3. **Functional Verification**
 
-- [ ] Verify chat header no longer shows visibility selector
-- [ ] Verify sidebar history items no longer show visibility controls
-- [ ] Test chat creation works normally without visibility options
-- [ ] Verify no visibility-related UI elements remain
-- [ ] Test that existing chats still load properly (visibility data should be safely ignored)
+- [x] Verify chat header no longer shows visibility selector
+- [x] Verify sidebar history items no longer show visibility controls
+- [x] Test chat creation works normally without visibility options
+- [x] Verify no visibility-related UI elements remain
+- [x] Test that existing chats still load properly (visibility data should be safely ignored)
 
 ### 4. **Database Verification**
 
-- [ ] Check that Chat table schema no longer includes visibility column
-- [ ] Test that existing chats still load properly (visibility data should be safely ignored)
+- [x] Check that Chat table schema no longer includes visibility column
+- [x] Test that existing chats still load properly (visibility data should be safely ignored)
 
 ### 5. **Test Suite Verification**
 
-- [ ] Run `pnpm test` to ensure all tests pass
-- [ ] Verify no visibility related test failures
-- [ ] Check that all modified test utilities work correctly
+- [x] Run `pnpm test` to ensure all tests pass
+- [x] Verify no visibility related test failures
+- [x] Check that all modified test utilities work correctly
 
 ## Clean Up Dependencies
 
@@ -227,46 +227,46 @@ Use this checklist to ensure complete removal:
 
 ### File System
 
-- [ ] `/hooks/use-chat-visibility.ts` file completely removed
-- [ ] `/components/visibility-selector.tsx` file removed
-- [ ] No remaining visibility-related temporary files
+- [x] `/hooks/use-chat-visibility.ts` file completely removed
+- [x] `/components/visibility-selector.tsx` file removed
+- [x] No remaining visibility-related temporary files
 
 ### Code Patterns
 
-- [ ] All `VisibilityType` imports removed
-- [ ] All `useChatVisibility` references removed
-- [ ] All `VisibilitySelector` references removed
-- [ ] All `GlobeIcon`, `LockIcon`, `CheckCircleFillIcon` references removed
-- [ ] All `ShareIcon`, `MoreHorizontalIcon` references removed
-- [ ] All `DropdownMenuSub`, `DropdownMenuPortal` visibility usage removed
-- [ ] All `selectedVisibilityType` prop passing removed
-- [ ] All `initialVisibilityType` prop passing removed
-- [ ] All `chat.visibility` property access removed
-- [ ] All visibility-related authorization logic removed
+- [x] All `VisibilityType` imports removed
+- [x] All `useChatVisibility` references removed
+- [x] All `VisibilitySelector` references removed
+- [x] All `GlobeIcon`, `LockIcon`, `CheckCircleFillIcon` references removed
+- [x] All `ShareIcon`, `MoreHorizontalIcon` references removed
+- [x] All `DropdownMenuSub`, `DropdownMenuPortal` visibility usage removed
+- [x] All `selectedVisibilityType` prop passing removed
+- [x] All `initialVisibilityType` prop passing removed
+- [x] All `chat.visibility` property access removed
+- [x] All visibility-related authorization logic removed
 
 ### Database & Types
 
-- [ ] `visibility` column removed from Chat table
-- [ ] `VisibilityType` interface removed from types
-- [ ] `selectedVisibilityType` removed from API schemas
-- [ ] Visibility-related database functions removed
-- [ ] Migration snapshot updated to remove visibility column
+- [x] `visibility` column removed from Chat table
+- [x] `VisibilityType` interface removed from types
+- [x] `selectedVisibilityType` removed from API schemas
+- [x] Visibility-related database functions removed
+- [x] Migration snapshot updated to remove visibility column
 
 ### UI & Components
 
-- [ ] Visibility selector elements completely removed from DOM
-- [ ] Visibility controls removed from sidebar history items
-- [ ] Visibility-related dropdown menus removed
-- [ ] No visibility-related UI elements remain
+- [x] Visibility selector elements completely removed from DOM
+- [x] Visibility controls removed from sidebar history items
+- [x] Visibility-related dropdown menus removed
+- [x] No visibility-related UI elements remain
 
 ### Tests & Development
 
-- [ ] Visibility E2E tests removed
-- [ ] Visibility test utilities removed
-- [ ] Visibility-related test assertions removed
-- [ ] Visibility test data/fixtures removed
-- [ ] API route tests updated to remove visibility parameters
-- [ ] Public chat test case removed (test.fixme() test)
+- [x] Visibility E2E tests removed
+- [x] Visibility test utilities removed
+- [x] Visibility-related test assertions removed
+- [x] Visibility test data/fixtures removed
+- [x] API route tests updated to remove visibility parameters
+- [x] Public chat test case removed (test.fixme() test)
 
 ## Impact Assessment
 

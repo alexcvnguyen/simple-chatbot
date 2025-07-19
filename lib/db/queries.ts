@@ -27,7 +27,7 @@ import {
 } from './schema';
 import { generateUUID } from '../utils';
 import { generateHashedPassword } from './utils';
-import type { VisibilityType } from '@/components/visibility-selector';
+
 import { ChatSDKError } from '../errors';
 
 // Optionally, if not using email/pass login, you can
@@ -80,23 +80,18 @@ export async function saveChat({
   id,
   userId,
   title,
-  visibility,
 }: {
   id: string;
   userId: string;
   title: string;
-  visibility: VisibilityType;
 }) {
   try {
-    console.log('Attempting to save chat:', { id, userId, title, visibility });
     const result = await db.insert(chat).values({
       id,
       createdAt: new Date(),
       userId,
       title,
-      visibility,
     });
-    console.log('Chat saved successfully:', result);
     return result;
   } catch (error) {
     console.error('Failed to save chat:', error);
@@ -328,22 +323,7 @@ export async function deleteMessagesByChatIdAfterTimestamp({
   }
 }
 
-export async function updateChatVisiblityById({
-  chatId,
-  visibility,
-}: {
-  chatId: string;
-  visibility: 'private' | 'public';
-}) {
-  try {
-    return await db.update(chat).set({ visibility }).where(eq(chat.id, chatId));
-  } catch (error) {
-    throw new ChatSDKError(
-      'bad_request:database',
-      'Failed to update chat visibility by id',
-    );
-  }
-}
+
 
 export async function getMessageCountByUserId({
   id,

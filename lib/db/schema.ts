@@ -26,9 +26,6 @@ export const chat = pgTable('Chat', {
   userId: uuid('userId')
     .notNull()
     .references(() => user.id),
-  visibility: varchar('visibility', { enum: ['public', 'private'] })
-    .notNull()
-    .default('private'),
 });
 
 export type Chat = InferSelectModel<typeof chat>;
@@ -68,12 +65,11 @@ export type Vote = InferSelectModel<typeof vote>;
 export const stream = pgTable(
   'Stream',
   {
-    id: uuid('id').notNull().defaultRandom(),
+    id: uuid('id').primaryKey().notNull().defaultRandom(),
     chatId: uuid('chatId').notNull(),
     createdAt: timestamp('createdAt').notNull(),
   },
   (table) => ({
-    pk: primaryKey({ columns: [table.id] }),
     chatRef: foreignKey({
       columns: [table.chatId],
       foreignColumns: [chat.id],

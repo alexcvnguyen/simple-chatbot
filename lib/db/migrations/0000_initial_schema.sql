@@ -1,20 +1,17 @@
--- Create User table
+
 CREATE TABLE IF NOT EXISTS "User" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"email" varchar(64) NOT NULL,
 	"password" varchar(64)
 );
 
--- Create Chat table
 CREATE TABLE IF NOT EXISTS "Chat" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"createdAt" timestamp NOT NULL,
 	"title" text NOT NULL,
-	"userId" uuid NOT NULL,
-	"visibility" varchar CHECK ("visibility" IN ('public', 'private')) DEFAULT 'private' NOT NULL
+	"userId" uuid NOT NULL
 );
 
--- Create Message table (final version - no v2 suffix)
 CREATE TABLE IF NOT EXISTS "Message" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"chatId" uuid NOT NULL,
@@ -23,7 +20,7 @@ CREATE TABLE IF NOT EXISTS "Message" (
 	"createdAt" timestamp NOT NULL
 );
 
--- Create Vote table (final version - no v2 suffix)
+
 CREATE TABLE IF NOT EXISTS "Vote" (
 	"chatId" uuid NOT NULL,
 	"messageId" uuid NOT NULL,
@@ -31,12 +28,10 @@ CREATE TABLE IF NOT EXISTS "Vote" (
 	CONSTRAINT "Vote_chatId_messageId_pk" PRIMARY KEY("chatId","messageId")
 );
 
--- Create Stream table
 CREATE TABLE IF NOT EXISTS "Stream" (
-	"id" uuid DEFAULT gen_random_uuid() NOT NULL,
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"chatId" uuid NOT NULL,
-	"createdAt" timestamp NOT NULL,
-	CONSTRAINT "Stream_id_pk" PRIMARY KEY("id")
+	"createdAt" timestamp NOT NULL
 );
 
 -- Add foreign key constraints
