@@ -7,7 +7,7 @@ import type { UseChatHelpers } from '@ai-sdk/react';
 import { motion } from 'framer-motion';
 import { useMessages } from '@/hooks/use-messages';
 import type { ChatMessage } from '@/lib/types';
-import { useDataStream } from './data-stream-provider';
+
 
 interface MessagesProps {
   chatId: string;
@@ -17,7 +17,6 @@ interface MessagesProps {
   setMessages: UseChatHelpers<ChatMessage>['setMessages'];
   regenerate: UseChatHelpers<ChatMessage>['regenerate'];
   isReadonly: boolean;
-  isArtifactVisible: boolean;
 }
 
 function PureMessages({
@@ -40,7 +39,7 @@ function PureMessages({
     status,
   });
 
-  useDataStream();
+
 
   return (
     <div
@@ -84,8 +83,6 @@ function PureMessages({
 }
 
 export const Messages = memo(PureMessages, (prevProps, nextProps) => {
-  if (prevProps.isArtifactVisible && nextProps.isArtifactVisible) return true;
-
   if (prevProps.status !== nextProps.status) return false;
   if (prevProps.messages.length !== nextProps.messages.length) return false;
   if (!equal(prevProps.messages, nextProps.messages)) return false;

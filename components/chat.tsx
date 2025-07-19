@@ -7,11 +7,9 @@ import useSWR, { useSWRConfig } from 'swr';
 import { ChatHeader } from '@/components/chat-header';
 import type { Vote } from '@/lib/db/schema';
 import { fetcher, fetchWithErrorHandlers, generateUUID } from '@/lib/utils';
-import { Artifact } from './artifact';
 import { MultimodalInput } from './multimodal-input';
 import { Messages } from './messages';
 import type { VisibilityType } from './visibility-selector';
-import { useArtifactSelector } from '@/hooks/use-artifact';
 import { unstable_serialize } from 'swr/infinite';
 import { getChatHistoryPaginationKey } from './sidebar-history';
 import { toast } from './toast';
@@ -21,7 +19,7 @@ import { useChatVisibility } from '@/hooks/use-chat-visibility';
 import { useAutoResume } from '@/hooks/use-auto-resume';
 import { ChatSDKError } from '@/lib/errors';
 import type { Attachment, ChatMessage } from '@/lib/types';
-import { useDataStream } from './data-stream-provider';
+
 
 export function Chat({
   id,
@@ -46,7 +44,6 @@ export function Chat({
   });
 
   const { mutate } = useSWRConfig();
-  const { setDataStream } = useDataStream();
 
   const [input, setInput] = useState<string>('');
 
@@ -78,9 +75,7 @@ export function Chat({
         };
       },
     }),
-    onData: (dataPart) => {
-      setDataStream((ds) => (ds ? [...ds, dataPart] : []));
-    },
+
     onFinish: () => {
       mutate(unstable_serialize(getChatHistoryPaginationKey));
     },
@@ -117,7 +112,6 @@ export function Chat({
   );
 
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
-  const isArtifactVisible = useArtifactSelector((state) => state.isVisible);
 
   useAutoResume({
     autoResume,
@@ -127,62 +121,42 @@ export function Chat({
   });
 
   return (
-    <>
-      <div className="flex flex-col min-w-0 h-dvh bg-background">
-        <ChatHeader
-          chatId={id}
-          selectedModelId={initialChatModel}
-          selectedVisibilityType={initialVisibilityType}
-          isReadonly={isReadonly}
-          session={session}
-        />
-
-        <Messages
-          chatId={id}
-          status={status}
-          votes={votes}
-          messages={messages}
-          setMessages={setMessages}
-          regenerate={regenerate}
-          isReadonly={isReadonly}
-          isArtifactVisible={isArtifactVisible}
-        />
-
-        <form className="flex mx-auto px-4 bg-background pb-4 md:pb-6 gap-2 w-full md:max-w-3xl">
-          {!isReadonly && (
-            <MultimodalInput
-              chatId={id}
-              input={input}
-              setInput={setInput}
-              status={status}
-              stop={stop}
-              attachments={attachments}
-              setAttachments={setAttachments}
-              messages={messages}
-              setMessages={setMessages}
-              sendMessage={sendMessage}
-              selectedVisibilityType={visibilityType}
-            />
-          )}
-        </form>
-      </div>
-
-      <Artifact
+    <div className="flex flex-col min-w-0 h-dvh bg-background">
+      <ChatHeader
         chatId={id}
-        input={input}
-        setInput={setInput}
+        selectedModelId={initialChatModel}
+        selectedVisibilityType={initialVisibilityType}
+        isReadonly={isReadonly}
+        session={session}
+      />
+
+      <Messages
+        chatId={id}
         status={status}
-        stop={stop}
-        attachments={attachments}
-        setAttachments={setAttachments}
-        sendMessage={sendMessage}
+        votes={votes}
         messages={messages}
         setMessages={setMessages}
         regenerate={regenerate}
-        votes={votes}
         isReadonly={isReadonly}
-        selectedVisibilityType={visibilityType}
       />
-    </>
+
+      <form className="flex mx-auto px-4 bg-background pb-4 md:pb-6 gap-2 w-full md:max-w-3xl">
+        {!isReadonly && (
+          <MultimodalInput
+            chatId={id}
+            input={input}
+            setInput={setInput}
+            status={status}
+            stop={stop}
+            attachments={attachments}
+            setAttachments={setAttachments}
+            messages={messages}
+            setMessages={setMessages}
+            sendMessage={sendMessage}
+            selectedVisibilityType={visibilityType}
+          />
+        )}
+      </form>
+    </div>
   );
 }
