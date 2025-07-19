@@ -25,10 +25,7 @@ export function compareMessages(
 
     if (item1.type !== item2.type) return false;
 
-    if (item1.type === 'file' && item2.type === 'file') {
-      // if (item1.image.toString() !== item2.image.toString()) return false;
-      // if (item1.mimeType !== item2.mimeType) return false;
-    } else if (item1.type === 'text' && item2.type === 'text') {
+    if (item1.type === 'text' && item2.type === 'text') {
       if (item1.text !== item2.text) return false;
     } else if (item1.type === 'tool-result' && item2.type === 'tool-result') {
       if (item1.toolCallId !== item2.toolCallId) return false;
@@ -135,17 +132,6 @@ export const getResponseChunksByPrompt = (
     return [
       ...textToDeltas('With Next.js, you can ship fast!'),
 
-      {
-        type: 'finish',
-        finishReason: 'stop',
-        usage: { inputTokens: 3, outputTokens: 10, totalTokens: 13 },
-      },
-    ];
-  } else if (
-    compareMessages(recentMessage, TEST_PROMPTS.USER_IMAGE_ATTACHMENT)
-  ) {
-    return [
-      ...textToDeltas('This painting is by Monet!'),
       {
         type: 'finish',
         finishReason: 'stop',

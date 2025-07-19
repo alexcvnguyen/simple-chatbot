@@ -84,12 +84,6 @@
           "primaryKey": false,
           "notNull": true
         },
-        "attachments": {
-          "name": "attachments",
-          "type": "json",
-          "primaryKey": false,
-          "notNull": true
-        },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp",

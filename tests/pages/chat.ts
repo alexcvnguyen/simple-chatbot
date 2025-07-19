@@ -76,25 +76,7 @@ export class ChatPage {
     await expect(this.page.getByTestId(elementId)).not.toBeVisible();
   }
 
-  async addImageAttachment() {
-    this.page.on('filechooser', async (fileChooser) => {
-      const filePath = path.join(
-        process.cwd(),
-        'public',
-        'images',
-        'mouth of the seine, monet.jpg',
-      );
-      const imageBuffer = fs.readFileSync(filePath);
 
-      await fileChooser.setFiles({
-        name: 'mouth of the seine, monet.jpg',
-        mimeType: 'image/jpeg',
-        buffer: imageBuffer,
-      });
-    });
-
-    await this.page.getByTestId('attachments-button').click();
-  }
 
   public async getSelectedModel() {
     const modelId = await this.page.getByTestId('model-selector').innerText();
@@ -186,21 +168,13 @@ export class ChatPage {
       .innerText()
       .catch(() => null);
 
-    const hasAttachments = await lastMessageElement
-      .getByTestId('message-attachments')
-      .isVisible()
-      .catch(() => false);
 
-    const attachments = hasAttachments
-      ? await lastMessageElement.getByTestId('message-attachments').all()
-      : [];
 
     const page = this.page;
 
     return {
       element: lastMessageElement,
       content,
-      attachments,
       async edit(newMessage: string) {
         await page.getByTestId('message-edit-button').click();
         await page.getByTestId('message-editor').fill(newMessage);

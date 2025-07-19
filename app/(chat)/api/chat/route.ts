@@ -106,6 +106,8 @@ export async function POST(request: Request) {
         message,
       });
 
+      console.log('Saving chat with:', { id, userId: session.user.id, title, visibility: selectedVisibilityType });
+
       await saveChat({
         id,
         userId: session.user.id,
@@ -129,15 +131,14 @@ export async function POST(request: Request) {
       city,
       country,
     };
-
-    await saveMessages({
+    
+    await saveMessages({  // ← Fixed indentation
       messages: [
         {
           chatId: id,
           id: message.id,
           role: 'user',
           parts: message.parts,
-          attachments: [],
           createdAt: new Date(),
         },
       ],
@@ -185,7 +186,6 @@ export async function POST(request: Request) {
             role: message.role,
             parts: message.parts,
             createdAt: new Date(),
-            attachments: [],
             chatId: id,
           })),
         });

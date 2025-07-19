@@ -18,7 +18,7 @@ import { useSearchParams } from 'next/navigation';
 import { useChatVisibility } from '@/hooks/use-chat-visibility';
 import { useAutoResume } from '@/hooks/use-auto-resume';
 import { ChatSDKError } from '@/lib/errors';
-import type { Attachment, ChatMessage } from '@/lib/types';
+import type { ChatMessage } from '@/lib/types';
 
 
 export function Chat({
@@ -111,7 +111,7 @@ export function Chat({
     fetcher,
   );
 
-  const [attachments, setAttachments] = useState<Array<Attachment>>([]);
+
 
   useAutoResume({
     autoResume,
@@ -148,8 +148,6 @@ export function Chat({
             setInput={setInput}
             status={status}
             stop={stop}
-            attachments={attachments}
-            setAttachments={setAttachments}
             messages={messages}
             setMessages={setMessages}
             sendMessage={sendMessage}

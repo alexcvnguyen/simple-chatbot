@@ -19,20 +19,7 @@ export const TEST_PROMPTS: Record<string, ModelMessage> = {
       { type: 'text', text: 'What are the advantages of using Next.js?' },
     ],
   },
-  USER_IMAGE_ATTACHMENT: {
-    role: 'user',
-    content: [
-      {
-        type: 'file',
-        mediaType: '...',
-        data: '...',
-      },
-      {
-        type: 'text',
-        text: 'Who painted this?',
-      },
-    ],
-  },
+
 
   GET_WEATHER_CALL: {
     role: 'user',
