@@ -1,5 +1,4 @@
-import fs from 'node:fs';
-import path from 'node:path';
+
 import { chatModels } from '@/lib/ai/models';
 import { expect, type Page } from '@playwright/test';
 

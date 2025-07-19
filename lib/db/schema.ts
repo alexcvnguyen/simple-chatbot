@@ -7,7 +7,6 @@ import {
   uuid,
   text,
   primaryKey,
-  foreignKey,
   boolean,
 } from 'drizzle-orm/pg-core';
 
@@ -61,20 +60,3 @@ export const vote = pgTable(
 );
 
 export type Vote = InferSelectModel<typeof vote>;
-
-export const stream = pgTable(
-  'Stream',
-  {
-    id: uuid('id').primaryKey().notNull().defaultRandom(),
-    chatId: uuid('chatId').notNull(),
-    createdAt: timestamp('createdAt').notNull(),
-  },
-  (table) => ({
-    chatRef: foreignKey({
-      columns: [table.chatId],
-      foreignColumns: [chat.id],
-    }),
-  }),
-);
-
-export type Stream = InferSelectModel<typeof stream>;

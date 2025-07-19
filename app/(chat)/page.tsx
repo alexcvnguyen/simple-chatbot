@@ -28,7 +28,6 @@ export default async function Page() {
         initialChatModel={DEFAULT_CHAT_MODEL}
         isReadonly={false}
         session={session}
-        autoResume={false}
       />
     );
   }
@@ -41,7 +40,6 @@ export default async function Page() {
       initialChatModel={modelIdFromCookie.value}
       isReadonly={false}
       session={session}
-      autoResume={false}
     />
   );
 }

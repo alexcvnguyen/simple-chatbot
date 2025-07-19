@@ -14,10 +14,8 @@ import { getChatHistoryPaginationKey } from './sidebar-history';
 import { toast } from './toast';
 import type { Session } from 'next-auth';
 import { useSearchParams } from 'next/navigation';
-import { useAutoResume } from '@/hooks/use-auto-resume';
 import { ChatSDKError } from '@/lib/errors';
 import type { ChatMessage } from '@/lib/types';
-
 
 export function Chat({
   id,
@@ -25,16 +23,13 @@ export function Chat({
   initialChatModel,
   isReadonly,
   session,
-  autoResume,
 }: {
   id: string;
   initialMessages: ChatMessage[];
   initialChatModel: string;
   isReadonly: boolean;
   session: Session;
-  autoResume: boolean;
 }) {
-
   const { mutate } = useSWRConfig();
 
   const [input, setInput] = useState<string>('');
@@ -46,7 +41,6 @@ export function Chat({
     status,
     stop,
     regenerate,
-    resumeStream,
   } = useChat<ChatMessage>({
     id,
     messages: initialMessages,
@@ -102,15 +96,6 @@ export function Chat({
     fetcher,
   );
 
-
-
-  useAutoResume({
-    autoResume,
-    initialMessages,
-    resumeStream,
-    setMessages,
-  });
-
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
       <ChatHeader
@@ -140,7 +125,7 @@ export function Chat({
             stop={stop}
             messages={messages}
             setMessages={setMessages}
-                        sendMessage={sendMessage}
+            sendMessage={sendMessage}
           />
         )}
       </form>

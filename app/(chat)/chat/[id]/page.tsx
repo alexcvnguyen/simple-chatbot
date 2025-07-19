@@ -48,7 +48,6 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
         initialChatModel={DEFAULT_CHAT_MODEL}
         isReadonly={session?.user?.id !== chat.userId}
         session={session}
-        autoResume={true}
       />
     );
   }
@@ -60,7 +59,6 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
       initialChatModel={chatModelFromCookie.value}
       isReadonly={session?.user?.id !== chat.userId}
       session={session}
-      autoResume={true}
     />
   );
 }

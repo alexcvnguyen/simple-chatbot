@@ -9,7 +9,6 @@ import {
 } from '@playwright/test';
 import { generateId } from 'ai';
 import { ChatPage } from './pages/chat';
-import { getUnixTime } from 'date-fns';
 
 export type UserContext = {
   context: BrowserContext;
@@ -71,7 +70,7 @@ export async function createAuthenticatedContext({
 }
 
 export function generateRandomTestUser() {
-  const email = `test-${getUnixTime(new Date())}@playwright.com`;
+  const email = `test-${Math.floor(Date.now() / 1000)}@playwright.com`;
   const password = generateId();
 
   return {

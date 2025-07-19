@@ -1,7 +1,6 @@
 'use client';
 
 import cx from 'classnames';
-import { format, isWithinInterval } from 'date-fns';
 import { useEffect, useState } from 'react';
 
 interface WeatherAtLocation {
@@ -201,6 +200,19 @@ function n(num: number): number {
   return Math.ceil(num);
 }
 
+// Helper function to check if a date is within an interval
+function isWithinInterval(date: Date, interval: { start: Date; end: Date }): boolean {
+  return date >= interval.start && date <= interval.end;
+}
+
+// Helper function to format time as hour with am/pm
+function formatTime(date: Date): string {
+  return date.toLocaleTimeString('en-US', { 
+    hour: 'numeric', 
+    hour12: true 
+  }).toLowerCase();
+}
+
 export function Weather({
   weatherAtLocation = SAMPLE,
 }: {
@@ -286,7 +298,7 @@ export function Weather({
         {displayTimes.map((time, index) => (
           <div key={time} className="flex flex-col items-center gap-1">
             <div className="text-blue-100 text-xs">
-              {format(new Date(time), 'ha')}
+              {formatTime(new Date(time))}
             </div>
             <div
               className={cx(
