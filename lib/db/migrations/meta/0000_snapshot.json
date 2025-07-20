@@ -1,12 +1,12 @@
 {
+  "id": "0c9c9983-1cc2-49cb-a462-cf730643545b",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
-  "id": "0000_initial_schema",
-  "prevId": null,
   "tables": {
-    "Chat": {
+    "public.Chat": {
       "name": "Chat",
-      "schema": "public",
+      "schema": "",
       "columns": {
         "id": {
           "name": "id",
@@ -40,17 +40,22 @@
           "name": "Chat_userId_User_id_fk",
           "tableFrom": "Chat",
           "tableTo": "User",
-          "columnsFrom": ["userId"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "Message": {
+    "public.Message": {
       "name": "Message",
-      "schema": "public",
+      "schema": "",
       "columns": {
         "id": {
           "name": "id",
@@ -90,55 +95,22 @@
           "name": "Message_chatId_Chat_id_fk",
           "tableFrom": "Message",
           "tableTo": "Chat",
-          "columnsFrom": ["chatId"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "chatId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "Stream": {
-      "name": "Stream",
-      "schema": "public",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "chatId": {
-          "name": "chatId",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "Stream_chatId_Chat_id_fk": {
-          "name": "Stream_chatId_Chat_id_fk",
-          "tableFrom": "Stream",
-          "tableTo": "Chat",
-          "columnsFrom": ["chatId"],
-          "columnsTo": ["id"],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        }
-      },
-      "uniqueConstraints": {}
-    },
-    "User": {
+    "public.User": {
       "name": "User",
-      "schema": "public",
+      "schema": "",
       "columns": {
         "id": {
           "name": "id",
@@ -162,22 +134,23 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "Vote": {
+    "public.Vote": {
       "name": "Vote",
-      "schema": "public",
+      "schema": "",
       "columns": {
         "chatId": {
           "name": "chatId",
           "type": "uuid",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "messageId": {
           "name": "messageId",
           "type": "uuid",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "isUpvoted": {
@@ -193,8 +166,12 @@
           "name": "Vote_chatId_Chat_id_fk",
           "tableFrom": "Vote",
           "tableTo": "Chat",
-          "columnsFrom": ["chatId"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "chatId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -202,18 +179,34 @@
           "name": "Vote_messageId_Message_id_fk",
           "tableFrom": "Vote",
           "tableTo": "Message",
-          "columnsFrom": ["messageId"],
-          "columnsTo": ["id"],
+          "columnsFrom": [
+            "messageId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
-      "uniqueConstraints": {
+      "compositePrimaryKeys": {
         "Vote_chatId_messageId_pk": {
           "name": "Vote_chatId_messageId_pk",
-          "columns": ["chatId", "messageId"]
+          "columns": [
+            "chatId",
+            "messageId"
+          ]
         }
-      }
+      },
+      "uniqueConstraints": {}
     }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
   }
-} 
+}
