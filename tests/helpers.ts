@@ -47,7 +47,7 @@ export async function createAuthenticatedContext({
   await page.getByLabel('Password').fill(password);
   await page.getByRole('button', { name: 'Sign Up' }).click();
 
-  await expect(page.getByTestId('toast')).toContainText(
+  await expect(page.getByTestId('toast').first()).toContainText(
     'Account created successfully!',
   );
 

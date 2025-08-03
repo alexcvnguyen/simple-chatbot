@@ -55,7 +55,7 @@ export class AuthPage {
   }
 
   async expectToastToContain(text: string) {
-    await expect(this.page.getByTestId('toast')).toContainText(text);
+    await expect(this.page.getByTestId('toast').first()).toContainText(text);
   }
 
   async openSidebar() {
